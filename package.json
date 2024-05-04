@@ -1,4 +1,5 @@
 {
+  "homepage": "https://yousefZw.github.io/qr-reader-app-",
   "name": "qr-reader-app",
   "private": true,
   "version": "0.0.0",
@@ -6,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
