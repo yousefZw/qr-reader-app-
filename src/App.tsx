@@ -16,6 +16,7 @@ function App() {
             <QrReader
               videoId="video"
               scanDelay={1000}
+              
               onResult={(result, error, qrreader) => {
                 if (result) {
                   setData(result);
@@ -29,7 +30,7 @@ function App() {
                   console.info(qrreader);
                 }
               }}
-              constraints={{ facingMode: "user" }}
+              constraints={{ facingMode: "environment" }}
               ViewFinder={ViewFinder}
             />
           </Box>
