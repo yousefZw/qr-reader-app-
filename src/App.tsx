@@ -9,9 +9,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { QrReader } from "react-qr-reader";
-import { ViewFinder } from "./component/ViewFinder";
 import { Result } from "@zxing/library";
-import { ViewFinderGreen } from "./component/ViewFinderGreen";
+import { ViewFinder } from "./component/ViewFinder";
 
 const isLink = (str?: string): boolean => {
   if (!str) return false;
@@ -55,10 +54,8 @@ function App() {
                 onResult={(result?: Result | null, error?: Error | null) => {
                   if (result) {
                     setData(result);
-                    setDataCaught(true);
-                  } else {
-                    setDataCaught(false);
                   }
+                  setDataCaught(!!result);
 
                   if (error) {
                     console.info(error);
@@ -66,15 +63,20 @@ function App() {
                   }
                 }}
                 constraints={{ facingMode: "environment" }}
-                ViewFinder={dataCaught ? ViewFinderGreen : ViewFinder}
+                ViewFinder={() => (
+                  <ViewFinder
+                    color={
+                      dataCaught
+                        ? "rgba(73, 255, 0, 0.7)"
+                        : "rgba(255, 0, 0, 0.5)"
+                    }
+                  />
+                )}
               />
             </Box>
           </Box>
           <Stack spacing={2}>
             <Box sx={{ color: "#F7E7CE" }}>
-              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                Result:
-              </Typography>
               <Box
                 sx={{
                   maxHeight: 400,
@@ -85,7 +87,14 @@ function App() {
                 <Typography variant="h6">Text:</Typography>
                 <Typography variant="body1" sx={{ color: "white" }}>
                   {isLink(data?.getText()) ? (
-                    <Link href={data?.getText()} underline="always">{data?.getText()}</Link>
+                    <Link
+                      href={data?.getText()}
+                      underline="always"
+                      target="_blank"
+                      color={"primary"}
+                    >
+                      {data?.getText()}
+                    </Link>
                   ) : (
                     <code> {data && data?.getText()}</code>
                   )}
