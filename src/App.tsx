@@ -2,6 +2,7 @@ import {
   Box,
   Container,
   CssBaseline,
+  Link,
   Paper,
   Stack,
   Typography,
@@ -11,6 +12,11 @@ import { QrReader } from "react-qr-reader";
 import { ViewFinder } from "./component/ViewFinder";
 import { Result } from "@zxing/library";
 import { ViewFinderGreen } from "./component/ViewFinderGreen";
+
+const isLink = (str?: string): boolean => {
+  if (!str) return false;
+  return str.startsWith("http://") || str.startsWith("https://");
+};
 
 function App() {
   const [data, setData] = useState<Result>();
@@ -39,7 +45,7 @@ function App() {
               variant="h4"
               sx={{ fontWeight: "bold", color: "#F7E7CE" }}
             >
-              QR Code Reader
+              QR Code Scanner
             </Typography>
             <Box sx={{ width: "100vw", padding: 5 }}>
               <QrReader
@@ -78,7 +84,11 @@ function App() {
               >
                 <Typography variant="h6">Text:</Typography>
                 <Typography variant="body1" sx={{ color: "white" }}>
-                  <code> {data && data?.getText()}</code>
+                  {isLink(data?.getText()) ? (
+                    <Link href={data?.getText()} underline="always">{data?.getText()}</Link>
+                  ) : (
+                    <code> {data && data?.getText()}</code>
+                  )}
                 </Typography>
                 <Typography variant="h6">Details:</Typography>
                 <Typography variant="body1">
