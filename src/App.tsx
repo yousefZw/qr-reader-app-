@@ -15,6 +15,7 @@ import { ViewFinderGreen } from "./component/ViewFinderGreen";
 function App() {
   const [data, setData] = useState<Result>();
   const [error, setError] = useState<Error>();
+  const [dataCatched, setDataCatched] = useState<boolean>();
 
   return (
     <>
@@ -23,21 +24,24 @@ function App() {
         <Paper
           sx={{
             p: 2,
-            alignContent: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
             background: "#ff781d",
           }}
         >
-          <Typography
-            variant="h2"
-            sx={{ fontWeight: "bold", color: "#F7E7CE" }}
+          <Box
+            sx={{
+              alignContent: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            QR Code Reader
-          </Typography>
-          <Stack spacing={2}>
-            <Box sx={{ width: 400, paddingTop: 5 }}>
+            <Typography
+              variant="h4"
+              sx={{ fontWeight: "bold", color: "#F7E7CE" }}
+            >
+              QR Code Reader
+            </Typography>
+            <Box sx={{ width: "100vw", padding: 5 }}>
               <QrReader
                 containerStyle={{ background: "#F7E7CE" }}
                 videoId="video"
@@ -45,6 +49,9 @@ function App() {
                 onResult={(result?: Result | null, error?: Error | null) => {
                   if (result) {
                     setData(result);
+                    setDataCatched(true);
+                  } else {
+                    setDataCatched(false);
                   }
 
                   if (error) {
@@ -53,9 +60,11 @@ function App() {
                   }
                 }}
                 constraints={{ facingMode: "environment" }}
-                ViewFinder={data ? ViewFinderGreen : ViewFinder}
+                ViewFinder={dataCatched ? ViewFinderGreen : ViewFinder}
               />
             </Box>
+          </Box>
+          <Stack spacing={2}>
             <Box sx={{ color: "#F7E7CE" }}>
               <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 Result:
@@ -65,16 +74,15 @@ function App() {
                   maxHeight: 400,
                   paddingTop: 1,
                   overflow: "auto",
-                  maxWidth: 400,
                 }}
               >
                 <Typography variant="h6">Text:</Typography>
-                <Typography variant="body1">
-                  {data && data?.getText()}
+                <Typography variant="body1" sx={{ color: "white" }}>
+                  <code> {data && data?.getText()}</code>
                 </Typography>
                 <Typography variant="h6">Details:</Typography>
                 <Typography variant="body1">
-                  {JSON.stringify(data, null, 2)}
+                  <code> {JSON.stringify(data, null, 2)}</code>
                 </Typography>
                 {error && <Typography variant="h4">{error.message}</Typography>}
               </Box>
