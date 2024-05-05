@@ -15,7 +15,7 @@ import { ViewFinderGreen } from "./component/ViewFinderGreen";
 function App() {
   const [data, setData] = useState<Result>();
   const [error, setError] = useState<Error>();
-  const [dataCatched, setDataCatched] = useState<boolean>();
+  const [dataCaught, setDataCaught] = useState<boolean>();
 
   return (
     <>
@@ -49,9 +49,9 @@ function App() {
                 onResult={(result?: Result | null, error?: Error | null) => {
                   if (result) {
                     setData(result);
-                    setDataCatched(true);
+                    setDataCaught(true);
                   } else {
-                    setDataCatched(false);
+                    setDataCaught(false);
                   }
 
                   if (error) {
@@ -60,7 +60,7 @@ function App() {
                   }
                 }}
                 constraints={{ facingMode: "environment" }}
-                ViewFinder={dataCatched ? ViewFinderGreen : ViewFinder}
+                ViewFinder={dataCaught ? ViewFinderGreen : ViewFinder}
               />
             </Box>
           </Box>
