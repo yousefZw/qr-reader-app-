@@ -1,9 +1,23 @@
 {
   "homepage": "https://yousefZw.github.io/qr-reader-app-",
   "name": "qr-reader-app",
+  "description": "A React Demo app for reading QR codes from the webcam or mobile device.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yousefZw/qr-reader-app-.git"
+  },
+  "keywords": [
+    "react",
+    "qr",
+    "qrcode",
+    "qrreader",
+    "zxing/library",
+    "Vite/react/typescript"
+  ],
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
